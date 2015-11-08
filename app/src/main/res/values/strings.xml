@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">OpenEats</string>
     <string name="action_settings">Settings</string>
+    <string name="user_id_key">user_id_key</string>
 </resources>
