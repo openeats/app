@@ -1,5 +1,6 @@
 package cloudnine.openeats.image;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import java.util.Objects;
 
 import cloudnine.openeats.R;
+import cloudnine.openeats.modal.FoodImage;
 
 /**
  * Created by gaurang on 11/10/15.
@@ -19,14 +21,14 @@ import cloudnine.openeats.R;
 public class ImageAdapter extends ArrayAdapter {
 
     private Context mContext;
-    private Object[] imageArray;
+    private FoodImage[] imageArray;
 
     public ImageAdapter(Context context, int resource) {
         super(context, resource);
         mContext = context;
     }
 
-    public ImageAdapter(Context context, int resource, Object[] objects) {
+    public ImageAdapter(Context context, int resource, FoodImage[] objects) {
         super(context, resource, objects);
         imageArray = objects;
         mContext = context;
@@ -39,7 +41,7 @@ public class ImageAdapter extends ArrayAdapter {
 
     @Override
     public int getCount() {
-        return super.getCount();
+        return imageArray.length;
     }
 
     @Override
@@ -58,9 +60,12 @@ public class ImageAdapter extends ArrayAdapter {
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
-//            imageView.setLayoutParams(new GridView.LayoutParams(1000, 1000));
-            imageView.setScaleType(ImageView.ScaleType.CENTER);
-//            imageView.setPadding(8, 8, 8, 8);
+            int dpMeasurement = getDpMeasurements(155);
+//            imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            imageView.setLayoutParams(new ViewGroup.LayoutParams(dpMeasurement,dpMeasurement));
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imageView.getOverlay().clear();
+            imageView.getOverlay().add(imageArray[position].getImageOverLay());
             getNumberOfColumsForLargePreview();
         } else {
             imageView = (ImageView) convertView;
@@ -73,6 +78,12 @@ public class ImageAdapter extends ArrayAdapter {
     private void getNumberOfColumsForLargePreview() {
         float dpWidth = getDpWidth();
 
+    }
+
+    private int getDpMeasurements(int pixelMesurement){
+        DisplayMetrics displayMetrics = mContext.getResources().getDisplayMetrics();
+
+        return pixelMesurement*(displayMetrics.densityDpi/160);
     }
 
     private float getDpWidth() {

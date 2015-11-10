@@ -51,15 +51,15 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="5"
-            android:numColumns="auto_fit"
+            android:numColumns="2"
             android:stretchMode="columnWidth"
-            android:horizontalSpacing="3dp"
-            android:divider="@null"
+            android:verticalSpacing="0dp"
+            android:horizontalSpacing="0dp"
             android:id="@+id/image_grid">
 
         </GridView>
 
-
+        
 
     </LinearLayout>
 

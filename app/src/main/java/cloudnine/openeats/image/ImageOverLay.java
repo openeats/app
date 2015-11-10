@@ -10,8 +10,8 @@ import android.graphics.drawable.Drawable;
 /**
  * Created by gaurang on 11/10/15.
  */
-public class ImageOverlay extends Drawable
-{
+
+public class ImageOverlay extends Drawable {
     private final Paint mPaint;
     private final RectF mRect;
 

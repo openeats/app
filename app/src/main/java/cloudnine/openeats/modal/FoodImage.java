@@ -1,5 +1,7 @@
 package cloudnine.openeats.modal;
 
+import cloudnine.openeats.image.ImageOverlay;
+
 /**
  * Created by gaurang on 11/10/15.
  */
@@ -11,6 +13,18 @@ public class FoodImage
     private long healthyRating;
     private long unhealthyRating;
     private long notSureRating;
+
+    public FoodImage(){
+
+    }
+
+    public ImageOverlay getImageOverLay(){
+
+        if(healthyRating > unhealthyRating)
+            return ImageOverlay.getDrawableForHealthyFood();
+        else
+            return ImageOverlay.getDrawableForUnHealthyFood();
+    }
 
 
     public long getId() {
@@ -45,11 +59,4 @@ public class FoodImage
         this.notSureRating = notSureRating;
     }
 
-    //    public String getFoodType() {
-//        return foodType;
-//    }
-//
-//    public void setFoodType(String foodType) {
-//        this.foodType = foodType;
-//    }
 }

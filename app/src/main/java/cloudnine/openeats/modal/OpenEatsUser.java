@@ -14,6 +14,14 @@ public class OpenEatsUser {
     private ArrayList<FoodImage> foodImages;
 
 
+    public boolean getUserInfo(){
+        return true;
+    }
+
+    public boolean uploadNewImage(){
+        return true;
+    }
+
     public Long getId() {
         return id;
     }

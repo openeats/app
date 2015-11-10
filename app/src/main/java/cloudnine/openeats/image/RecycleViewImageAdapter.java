@@ -26,7 +26,7 @@ public class RecycleViewImageAdapter extends RecyclerView.Adapter<RecycleViewIma
 
     @Override
     public RecyclerViewImageHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View imageView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_food_image,parent);
+        View imageView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_food_image,null);
         return new RecyclerViewImageHolder(imageView);
     }
 
@@ -37,7 +37,7 @@ public class RecycleViewImageAdapter extends RecyclerView.Adapter<RecycleViewIma
 
     @Override
     public int getItemCount() {
-        return 0;
+        return itemList.size();
     }
 
     public class RecyclerViewImageHolder extends RecyclerView.ViewHolder{

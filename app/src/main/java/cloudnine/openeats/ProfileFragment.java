@@ -6,16 +6,22 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.GridView;
+import android.widget.ImageButton;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
 import cloudnine.openeats.image.ImageAdapter;
 import cloudnine.openeats.image.RecycleViewImageAdapter;
 import cloudnine.openeats.modal.FoodImage;
+import cloudnine.openeats.modal.FoodImageFactory;
 
 
 /**
@@ -32,6 +38,7 @@ public class ProfileFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -40,6 +47,7 @@ public class ProfileFragment extends Fragment {
     private ArrayList<FoodImage> foodImageList = new ArrayList<FoodImage>(100);
 
     private OnFragmentInteractionListener mListener;
+    private GridLayoutManager manager;
 
     /**
      * Use this factory method to create a new instance of
@@ -77,14 +85,33 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View fragmentProfile = inflater.inflate(R.layout.fragment_profile, container, false);
-//        foodImages = new ImageAdapter(getContext(),0,testDataArray);
-        GridLayoutManager manager = new GridLayoutManager(getActivity(), 3);
+        foodImageList = FoodImageFactory.getTestFoodImageArray(100);
+        FoodImage[] testData = foodImageList.toArray(new FoodImage[foodImageList.size()]);
 
-        RecyclerView gv = (RecyclerView)fragmentProfile.findViewById(R.id.image_grid);
-        RecycleViewImageAdapter recycleViewAdapter = new RecycleViewImageAdapter(this.getContext(),foodImageList);
-        gv.setAdapter(recycleViewAdapter);
-        gv.setLayoutManager(manager);
+        int dpMeasurement = getDpMeasurements(120);
+
+        foodImageList.toArray(testData);
+        GridView gv = (GridView) fragmentProfile.findViewById(R.id.image_grid);
+        gv.setColumnWidth(dpMeasurement);
+        ImageAdapter ia = new ImageAdapter(fragmentProfile.getContext(),0, testData);
+        gv.setAdapter(ia);
+
+
         return fragmentProfile;
+    }
+
+    private int getDpMeasurements(int pixelMesurement){
+        DisplayMetrics displayMetrics = getContext().getResources().getDisplayMetrics();
+
+        return pixelMesurement*(displayMetrics.densityDpi/160);
+    }
+
+    private int getGridColumnCount() {
+        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+
+        float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+        return 0;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
