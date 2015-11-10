@@ -41,6 +41,18 @@
                 android:id="@+id/home_profile_eats_img3_id"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"/>
+            <ImageView
+                android:id="@+id/home_profile_eats_img4_id"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"/>
+            <ImageView
+                android:id="@+id/home_profile_eats_img5_id"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_marginLeft="3dp"/>
         </LinearLayout>
 

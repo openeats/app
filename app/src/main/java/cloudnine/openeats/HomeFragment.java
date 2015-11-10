@@ -164,6 +164,8 @@ public class HomeFragment extends Fragment {
             public final ImageView mImageView0;
             public final ImageView mImageView1;
             public final ImageView mImageView2;
+            public final ImageView mImageView3;
+            public final ImageView mImageView4;
 
             public ViewHolder(View itemView) {
                 super(itemView);
@@ -173,6 +175,8 @@ public class HomeFragment extends Fragment {
                 mImageView0 = (ImageView) itemView.findViewById(R.id.home_profile_eats_img1_id);
                 mImageView1 = (ImageView) itemView.findViewById(R.id.home_profile_eats_img2_id);
                 mImageView2 = (ImageView) itemView.findViewById(R.id.home_profile_eats_img3_id);
+                mImageView3 = (ImageView) itemView.findViewById(R.id.home_profile_eats_img4_id);
+                mImageView4 = (ImageView) itemView.findViewById(R.id.home_profile_eats_img5_id);
             }
         }
 
@@ -206,6 +210,18 @@ public class HomeFragment extends Fragment {
                     .load(userData.userPostImgUrls[2])
                     .fitCenter()
                     .into(holder.mImageView2);
+            if ((holder.mImageView3 != null) && (userData.userPostImgUrls[3] != null)) {
+                Glide.with(holder.mImageView3.getContext())
+                        .load(userData.userPostImgUrls[3])
+                        .fitCenter()
+                        .into(holder.mImageView3);
+            }
+            if ((holder.mImageView4 != null) && (userData.userPostImgUrls[4] != null)) {
+                Glide.with(holder.mImageView4.getContext())
+                        .load(userData.userPostImgUrls[4])
+                        .fitCenter()
+                        .into(holder.mImageView4);
+            }
         }
 
         @Override
@@ -217,11 +233,12 @@ public class HomeFragment extends Fragment {
 
     public class FetchHomeInfoAsyncTask extends AsyncTask<Void, Void, List<FetchHomeInfoAsyncTask.HomeUserData>> {
 
-        public final int NUM_IMAGES = 3;
+        public final int NUM_IMAGES_LANDSCAPE = 5;
+
         public class HomeUserData {
             public String userName;
             public String userPicUrl;
-            public String[] userPostImgUrls = new String[NUM_IMAGES];
+            public String[] userPostImgUrls = new String[NUM_IMAGES_LANDSCAPE];
         }
 
         private HomeFragment homeFragment;
@@ -269,9 +286,9 @@ public class HomeFragment extends Fragment {
                 int responseCode = urlConnection.getResponseCode();
                 String resmsg = urlConnection.getResponseMessage();
                 if (urlConnection.getResponseCode() == 200) {
-                    Log.d(TAG, "Created user successfully");
+                    Log.d(TAG, "Fetched Home data successfully");
                 } else {
-                    Log.d(TAG, "Create user failed");
+                    Log.d(TAG, "Home data fetch failed");
                 }
 
                 // Read the input stream into a String
@@ -331,7 +348,7 @@ public class HomeFragment extends Fragment {
 
                     JSONArray postsArray = userObj.getJSONArray(context.getString(R.string.posts_attr));
                     for (int indx = 0; indx < postsArray.length(); ++indx) {
-                        if (indx == NUM_IMAGES) {
+                        if (indx == NUM_IMAGES_LANDSCAPE) {
                             break;
                         }
                         userData.userPostImgUrls[indx] = postsArray.getJSONObject(indx).
