@@ -37,9 +37,7 @@ import cloudnine.openeats.image.ImageUpload;
 import cloudnine.openeats.util.UtilClass;
 import cz.msebera.android.httpclient.Header;
 
-public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener,
-                        FoodReviewFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener
-{
+public class MainActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -130,11 +128,6 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         tabLayout.getTabAt(0).setIcon(R.drawable.oe_home);
         tabLayout.getTabAt(1).setIcon(R.drawable.oe_review);
         tabLayout.getTabAt(2).setIcon(R.drawable.oe_profile);
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
