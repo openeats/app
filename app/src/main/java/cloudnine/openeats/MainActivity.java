@@ -81,9 +81,9 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
 
     private void setupTabIcons() {
         //@todo setup icons here
-//        tabLayout.getTabAt(0).setIcon(tabIcons[0]);
-//        tabLayout.getTabAt(1).setIcon(tabIcons[1]);
-//        tabLayout.getTabAt(2).setIcon(tabIcons[2]);
+        tabLayout.getTabAt(0).setIcon(R.drawable.oe_home);
+        tabLayout.getTabAt(1).setIcon(R.drawable.oe_review);
+        tabLayout.getTabAt(2).setIcon(R.drawable.oe_profile);
     }
 
     @Override
@@ -117,7 +117,8 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         @Override
         public CharSequence getPageTitle(int position) {
             // @todo return null when tabs do not have titles only icons
-            return mFragmentTitleList.get(position);
+            //return mFragmentTitleList.get(position);
+            return null;
         }
     }
 }
