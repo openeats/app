@@ -211,7 +211,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private boolean isPasswordValid(String password) {
-        return password.length() > 6;
+        return password.length() > 0;
     }
 
     /**
@@ -338,6 +338,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 urlConnection.setRequestMethod("GET");
                 urlConnection.connect();
 
+                int responseCode = urlConnection.getResponseCode();
+                String resmsg = urlConnection.getResponseMessage();
                 if (urlConnection.getResponseCode() == 200) {
                     Log.d(TAG, "Created user successfully");
                 } else {

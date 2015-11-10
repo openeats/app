@@ -1,6 +1,7 @@
 package cloudnine.openeats;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -20,7 +21,9 @@ import java.util.List;
 
 import cloudnine.openeats.util.UtilClass;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener,
+                        FoodReviewFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener
+{
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -70,9 +73,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new MainActivityFragment(), "ONE");
-        adapter.addFragment(new MainActivityFragment(), "TWO");
-        adapter.addFragment(new MainActivityFragment(), "THREE");
+        adapter.addFragment(new HomeFragment(), "HOME");
+        adapter.addFragment(new FoodReviewFragment(), "REVIEW");
+        adapter.addFragment(new ProfileFragment(), "PROFILE");
         viewPager.setAdapter(adapter);
     }
 
@@ -81,6 +84,11 @@ public class MainActivity extends AppCompatActivity {
 //        tabLayout.getTabAt(0).setIcon(tabIcons[0]);
 //        tabLayout.getTabAt(1).setIcon(tabIcons[1]);
 //        tabLayout.getTabAt(2).setIcon(tabIcons[2]);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
