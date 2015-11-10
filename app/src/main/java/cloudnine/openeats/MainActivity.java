@@ -1,10 +1,16 @@
 package cloudnine.openeats;
 
+import android.Manifest;
+import android.app.IntentService;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,14 +18,24 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.desmond.squarecamera.CameraActivity;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
+import cloudnine.openeats.image.ImageUpload;
 import cloudnine.openeats.util.UtilClass;
+import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener,
                         FoodReviewFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener
@@ -27,7 +43,9 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private static final String TAG = MainActivity.class.getSimpleName();
 
+    private static final int REQUEST_CAMERA = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +67,32 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         }
     }
 
+    public void launchCamera() {
+
+        // Start CameraActivity
+        Intent startCustomCameraIntent = new Intent(this, CameraActivity.class);
+        startActivityForResult(startCustomCameraIntent, REQUEST_CAMERA);
+
+    }
+
+    // Receive Uri of saved square photo
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != RESULT_OK) return;
+
+        if (requestCode == REQUEST_CAMERA) {
+            Log.d(TAG, "Camera result" );
+            Uri photoUri = data.getData();
+            String rating = data.getStringExtra(CameraActivity.BUTTON_PRESSED);
+            File file = new File(photoUri.getPath());
+
+            startUpload(file, rating);
+            Log.d(TAG, "Not uploading for test" + photoUri.toString());
+
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -66,6 +110,8 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.action_photo) {
+            launchCamera();
         }
 
         return super.onOptionsItemSelected(item);
@@ -81,9 +127,9 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
 
     private void setupTabIcons() {
         //@todo setup icons here
-//        tabLayout.getTabAt(0).setIcon(tabIcons[0]);
-//        tabLayout.getTabAt(1).setIcon(tabIcons[1]);
-//        tabLayout.getTabAt(2).setIcon(tabIcons[2]);
+        tabLayout.getTabAt(0).setIcon(R.drawable.oe_home);
+        tabLayout.getTabAt(1).setIcon(R.drawable.oe_review);
+        tabLayout.getTabAt(2).setIcon(R.drawable.oe_profile);
     }
 
     @Override
@@ -117,7 +163,40 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         @Override
         public CharSequence getPageTitle(int position) {
             // @todo return null when tabs do not have titles only icons
-            return mFragmentTitleList.get(position);
+            //return mFragmentTitleList.get(position);
+            return null;
         }
     }
+
+    private void startUpload(File fileUri, String rating) {
+        String userId = UtilClass.getUserId(this);
+
+
+        try {
+            ImageUpload.uploadImage(fileUri, userId, rating, new AsyncHttpResponseHandler() {
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                    Log.d(TAG,"Upload Failure");
+                }
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                    Log.d(TAG,"Upload Success");
+                }
+
+                @Override
+                public void onProgress(long bytesWritten, long totalSize) {
+                    super.onProgress(bytesWritten, totalSize);
+                    Log.d("CameraActivity","Bytes Written : " +bytesWritten + " Total Size:" + totalSize);
+                }
+            });
+
+        } catch(FileNotFoundException e) {
+            Log.e(TAG, "Can't upload image: " + fileUri.toString() + " - file not found!");
+            return;
+        }
+    }
+
+
 }

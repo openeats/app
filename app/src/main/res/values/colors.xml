@@ -3,4 +3,8 @@
     <color name="colorPrimary">#2C9842</color>
     <color name="colorPrimaryDark">#157037</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="ratingHealthy">#2C9842</color>
+    <color name="ratingUnhealthy">#ec412c</color>
+    <color name="ratingNeutral">#fdbd00</color>
 </resources>

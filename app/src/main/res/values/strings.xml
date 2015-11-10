@@ -24,14 +24,24 @@
     <string name="prompt_name">Name</string>
     <string name="base_url">"http://api.openeatsproject.com/"</string>
     <string name="user_register_url">http://api.openeatsproject.com/users/register</string>
-    <string name="user_login_url">"http://api.openeatsproject.com/users/authenticate"</string>
+    <string name="user_login_url">http://api.openeatsproject.com/users/authenticate</string>
     <string name="image_upload_url">http://api.openeatsproject.com/containers/posts/upload</string>
+    <string name="home_data_fetch_url">http://api.openeatsproject.com/users/following/posts</string>
     <string name="name_param">name</string>
     <string name="password_param">password</string>
     <string name="email_param">email</string>
+    <string name="take_photo">Take a photo</string>
+    <string name="hello_world">Hi! world</string>
+    <string name="userid_param">userId</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+ <string name="name_attr">name</string>
+    <string name="picture_attr">picture</string>
+    <string name="small_attr">small</string>
+    <string name="posts_attr">posts</string>
+    <string name="images_attr">images</string>
+ <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="small_image_button_content_desc">Click to view small images</string>
     <string name="medium_image_button_content_desc">Click to view medium images</string>
     <string name="large_image_button_content_desc">Click to view large images</string>
