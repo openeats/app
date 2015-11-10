@@ -11,7 +11,7 @@ import android.view.View;
 public class CameraActivity extends AppCompatActivity {
 
     public static final String TAG = CameraActivity.class.getSimpleName();
-
+    public static final String BUTTON_PRESSED = "buttonPressed"; //for intents
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.squarecamera__CameraFullScreenTheme);
@@ -33,6 +33,22 @@ public class CameraActivity extends AppCompatActivity {
     public void returnPhotoUri(Uri uri) {
         Intent data = new Intent();
         data.setData(uri);
+
+        if (getParent() == null) {
+            setResult(RESULT_OK, data);
+        } else {
+            getParent().setResult(RESULT_OK, data);
+        }
+
+        finish();
+    }
+
+    //same as above function, but also save healthiness
+    public void returnPhotoData(Uri uri, String healthiness) {
+        Intent data = new Intent();
+        data.setData(uri);
+        //record which button was pressed by string
+        data.putExtra(BUTTON_PRESSED, healthiness);
 
         if (getParent() == null) {
             setResult(RESULT_OK, data);

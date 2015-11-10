@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,10 +34,22 @@ public class EditSavePhotoFragment extends Fragment {
         @Override
         public void onClick(View v) {
             String buttonPressed = ((Button)v).getText().toString();
-            savePicture();
-            Intent intent = new Intent();
-            intent.putExtra("buttonPressed", buttonPressed);
-            getActivity().setResult(Activity.RESULT_OK, intent);
+            Log.d(TAG, "Button pressed was : " + buttonPressed);
+
+            //final boolean isGranted = data.getBooleanExtra(RuntimePermissionActivity.REQUESTED_PERMISSION, false);
+            final View view = getView();
+            if (view == null) Log.e(TAG, "**View is nulll!!!!!!**");
+            if (view == null) return;
+
+            ImageView photoImageView = (ImageView) view.findViewById(R.id.photo);
+            if (photoImageView == null) Log.e(TAG, "**PhotoImageView is nulll!!!!!!**");
+            Bitmap bitmap = ((BitmapDrawable) photoImageView.getDrawable()).getBitmap();
+            Log.d(TAG, "Image is this big: " + bitmap.getByteCount());
+            Uri photoUri = ImageUtility.savePicture(getActivity(), bitmap);
+            if (photoUri == null) Log.e(TAG, "**URI is nulll!!!!!!**");
+            Log.d(TAG, "returning photo URI to Camera Activity callback" + photoUri.toString());
+            ((CameraActivity) getActivity()).returnPhotoData(photoUri, buttonPressed);
+
         }
     };
 
@@ -91,7 +104,6 @@ public class EditSavePhotoFragment extends Fragment {
 
         view.findViewById(R.id.save_healthy).setOnClickListener(onClickListener);
         view.findViewById(R.id.save_unhealthy).setOnClickListener(onClickListener);
-        view.findViewById(R.id.save_unsure).setOnClickListener(onClickListener);
     }
 
     private void rotatePicture(int rotation, byte[] data, ImageView photoImageView) {
@@ -131,12 +143,12 @@ public class EditSavePhotoFragment extends Fragment {
             final boolean isGranted = data.getBooleanExtra(RuntimePermissionActivity.REQUESTED_PERMISSION, false);
             final View view = getView();
             if (isGranted && view != null) {
-                ImageView photoImageView = (ImageView) view.findViewById(R.id.photo);
+                /*ImageView photoImageView = (ImageView) view.findViewById(R.id.photo);
 
                 Bitmap bitmap = ((BitmapDrawable) photoImageView.getDrawable()).getBitmap();
                 Uri photoUri = ImageUtility.savePicture(getActivity(), bitmap);
-
-                ((CameraActivity) getActivity()).returnPhotoUri(photoUri);
+                Log.d(TAG, "returning photo URI to Camera Activity callback");
+                ((CameraActivity) getActivity()).returnPhotoUri(photoUri);*/
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);

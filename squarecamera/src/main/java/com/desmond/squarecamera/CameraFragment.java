@@ -216,7 +216,7 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
             mPreviewView.setCamera(mCamera);
         } catch (Exception e) {
             Log.d(TAG, "Can't open camera with id " + cameraID);
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 

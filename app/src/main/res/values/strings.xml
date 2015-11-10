@@ -29,7 +29,8 @@
     <string name="name_param">name</string>
     <string name="password_param">password</string>
     <string name="email_param">email</string>
-
+    <string name="take_photo">Take a photo</string>
+    <string name="hello_world">Hi! world</string>
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

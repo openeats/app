@@ -3,4 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
+    <!-- "Mark Favorite", should appear as action button if possible -->
+    <item
+        android:id="@+id/action_photo"
+        android:icon="@android:drawable/ic_menu_camera"
+        android:title="@string/take_photo"
+        app:showAsAction="always"/>
 </menu>
