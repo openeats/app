@@ -36,6 +36,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="cloudnine.openeats.LoginActivity" />
         </activity>
+        <activity android:name=".SelfProfile" >
+        </activity>
     </application>
 
 </manifest>

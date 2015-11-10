@@ -2,8 +2,71 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" tools:context="cloudnine.openeats.ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:id="@+id/large_image_button"
+                android:src="@android:drawable/ic_dialog_dialer"
+                android:contentDescription="@string/large_image_button_content_desc"/>
+
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:id="@+id/medium_image_button"
+                android:src="@android:drawable/ic_dialog_dialer"
+                android:contentDescription="@string/medium_image_button_content_desc"/>
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:id="@+id/small_image_button"
+                android:src="@android:drawable/ic_dialog_dialer"
+                android:contentDescription="@string/small_image_button_content_desc"/>
+
+            <Switch
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:id="@+id/show_overlay_switch"/>
+
+        </LinearLayout>
+
+        <!--<GridView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_weight="5"-->
+            <!--android:numColumns="2"-->
+            <!--android:verticalSpacing="10dp"-->
+            <!--android:horizontalSpacing="10dp"-->
+            <!--android:id="@+id/image_grid">-->
+
+        <!--</GridView>-->
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:id="@+id/image_grid"/>
+
+        <!--</android.support.v7.widget.RecyclerView>-->
+
+    </LinearLayout>
+
 
 </FrameLayout>

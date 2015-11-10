@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="medium_image_button_content_desc">Click to view medium images</string>
+    <string name="large_image_button_content_desc">Click to view large images</string>
+</resources>
