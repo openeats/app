@@ -6,6 +6,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import cloudnine.openeats.R;
 
 /**
@@ -32,5 +35,16 @@ public class UtilClass {
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         return (activeNetwork != null) && (activeNetwork.isConnectedOrConnecting());
     }
+
+    public static String getUserIdFromJsonData(String userJsonData) {
+        try {
+            JSONObject userJsonObj = new JSONObject(userJsonData);
+            return userJsonObj.getString("id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 }
