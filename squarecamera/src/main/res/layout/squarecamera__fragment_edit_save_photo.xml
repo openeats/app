@@ -40,15 +40,4 @@
         android:layout_below="@id/save_healthy"
         android:text="@string/save_unhealthy"
         android:background="@android:color/holo_red_dark" />
-    <Button
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:id="@+id/save_unsure"
-        android:layout_centerInParent="true"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/save_unhealthy"
-        android:text="@string/save_unsure"
-        android:background="#e0ff00" />
 </RelativeLayout>
