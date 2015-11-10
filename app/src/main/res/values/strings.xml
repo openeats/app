@@ -28,4 +28,7 @@
     <string name="name_param">name</string>
     <string name="password_param">password</string>
     <string name="email_param">email</string>
+    <string name="title_activity_camera">CameraActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="take_photo">Take a Photo</string>
 </resources>
