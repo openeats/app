@@ -23,13 +23,13 @@
     <string name="action_submit">SUBMIT</string>
     <string name="prompt_name">Name</string>
     <string name="base_url">"http://api.openeatsproject.com/"</string>
-    <string name="user_register_url">"http://api.openeatsproject.com/users/register"</string>
+    <string name="user_register_url">http://api.openeatsproject.com/users/register</string>
     <string name="user_login_url">"http://api.openeatsproject.com/users/authenticate"</string>
+    <string name="image_upload_url">http://api.openeatsproject.com/containers/posts/upload</string>
     <string name="name_param">name</string>
     <string name="password_param">password</string>
     <string name="email_param">email</string>
-    <string name="title_activity_camera">CameraActivity</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="take_photo">Take a Photo</string>
-    <string name="title_activity_square_camera">SquareCameraActivity</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
