@@ -220,7 +220,7 @@ public class RegisterUserActivity extends AppCompatActivity implements LoaderCal
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+        return true;//email.contains("@");
     }
 
     private boolean isPasswordValid(String password) {
