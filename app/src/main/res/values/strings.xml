@@ -34,14 +34,17 @@
     <string name="hello_world">Hi! world</string>
     <string name="userid_param">userId</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
- <string name="name_attr">name</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="name_attr">name</string>
     <string name="picture_attr">picture</string>
     <string name="small_attr">small</string>
     <string name="posts_attr">posts</string>
     <string name="images_attr">images</string>
- <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_main_drawer">MainDrawerActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="small_image_button_content_desc">Click to view small images</string>
     <string name="medium_image_button_content_desc">Click to view medium images</string>
     <string name="large_image_button_content_desc">Click to view large images</string>
