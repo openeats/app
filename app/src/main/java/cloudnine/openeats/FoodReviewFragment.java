@@ -64,7 +64,7 @@ public class FoodReviewFragment extends Fragment {
     // private ArrayList<String> mItems;
     OnItemTouchListener itemTouchListener;
     RecyclerView mRecyclerView;
-    List<FetchFoodAsyncTask.FoodModel> foodModels;
+    //List<FetchFoodAsyncTask.FoodModel> foodModels;
 
 
     /**
@@ -228,7 +228,41 @@ public class FoodReviewFragment extends Fragment {
 
         @Override
         protected void onPostExecute(final List<FoodModel> foodModelList) {
-            reviewFragment.mRecyclerView.setAdapter(new CardViewAdapter(foodModelList, itemTouchListener, context));
+
+
+            mAdapter = new CardViewAdapter(foodModelList, itemTouchListener, context);
+            reviewFragment.mRecyclerView.setAdapter(mAdapter);
+
+            SwipeableRecyclerViewTouchListener swipeTouchListener =
+                    new SwipeableRecyclerViewTouchListener(mRecyclerView,
+                            new SwipeableRecyclerViewTouchListener.SwipeListener() {
+                                @Override
+                                public boolean canSwipe(int position) {
+                                    return true;
+                                }
+
+                                @Override
+                                public void onDismissedBySwipeLeft(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                                    for (int position : reverseSortedPositions) {
+                                       // Toast.makeText(RateActivity.this, mItems.get(position) + " swiped left", Toast.LENGTH_SHORT).show();
+                                        mAdapter.foodModels.remove(position);
+                                        mAdapter.notifyItemRemoved(position);
+                                    }
+                                    mAdapter.notifyDataSetChanged();
+                                }
+
+                                @Override
+                                public void onDismissedBySwipeRight(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                                    for (int position : reverseSortedPositions) {
+//                                    Toast.makeText(RateActivity.this, mItems.get(position) + " swiped right", Toast.LENGTH_SHORT).show();
+                                        mAdapter.foodModels.remove(position);
+                                        mAdapter.notifyItemRemoved(position);
+                                    }
+                                    mAdapter.notifyDataSetChanged();
+                                }
+                            });
+
+            mRecyclerView.addOnItemTouchListener(swipeTouchListener);
         }
 
         @Override
