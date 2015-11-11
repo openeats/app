@@ -27,7 +27,7 @@ import cloudnine.openeats.util.UtilClass;
 import cz.msebera.android.httpclient.Header;
 
 public class MainDrawerActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, FoodReviewFragment.OnFragmentInteractionListener {
 
     private static final int REQUEST_CAMERA = 0;
 
@@ -177,5 +177,10 @@ public class MainDrawerActivity extends AppCompatActivity
             //Log.e(TAG, "Can't upload image: " + fileUri.toString() + " - file not found!");
             return;
         }
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
