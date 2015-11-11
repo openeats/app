@@ -244,7 +244,7 @@ public class FoodReviewFragment extends Fragment {
                                 @Override
                                 public void onDismissedBySwipeLeft(RecyclerView recyclerView, int[] reverseSortedPositions) {
                                     for (int position : reverseSortedPositions) {
-                                       // Toast.makeText(RateActivity.this, mItems.get(position) + " swiped left", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context, "UNHEALTHY", Toast.LENGTH_SHORT).show();
                                         mAdapter.foodModels.remove(position);
                                         mAdapter.notifyItemRemoved(position);
                                     }
@@ -254,7 +254,7 @@ public class FoodReviewFragment extends Fragment {
                                 @Override
                                 public void onDismissedBySwipeRight(RecyclerView recyclerView, int[] reverseSortedPositions) {
                                     for (int position : reverseSortedPositions) {
-//                                    Toast.makeText(RateActivity.this, mItems.get(position) + " swiped right", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context, "HEALTHY", Toast.LENGTH_SHORT).show();
                                         mAdapter.foodModels.remove(position);
                                         mAdapter.notifyItemRemoved(position);
                                     }
