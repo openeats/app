@@ -67,9 +67,9 @@ public class ImageAdapter extends ArrayAdapter<Post> {
                         .fitCenter()
                         .into(imageView);
 
-                int dpMeasurement = getDpMeasurements(155);
-                imageView.setLayoutParams(new ViewGroup.LayoutParams(dpMeasurement, dpMeasurement));
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//                int dpMeasurement = getDpMeasurements(155);
+//                imageView.setLayoutParams(new ViewGroup.LayoutParams(dpMeasurement, dpMeasurement));
+//                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 imageView.getOverlay().clear();
                 imageView.getOverlay().add(imageArray[position].getImageOverLay());
 
