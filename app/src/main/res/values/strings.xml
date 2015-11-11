@@ -37,6 +37,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="name_attr">name</string>
+    <string name="rating_attr">rating</string>
     <string name="picture_attr">picture</string>
     <string name="small_attr">small</string>
     <string name="posts_attr">posts</string>

@@ -115,6 +115,7 @@ public class HomeFragment extends Fragment {
             public final View mView;
             public final TextView mUserName;
             public final ImageView mUserProfImgView;
+            public final ImageView mUserRatingImgView;
             public final ImageView mImageView0;
             public final ImageView mImageView1;
             public final ImageView mImageView2;
@@ -126,6 +127,7 @@ public class HomeFragment extends Fragment {
                 this.mView = itemView;
                 mUserName = (TextView) itemView.findViewById(R.id.home_profile_name_id);
                 mUserProfImgView = (ImageView) itemView.findViewById(R.id.home_profile_img_id);
+                mUserRatingImgView = (ImageView) itemView.findViewById(R.id.home_profile_rating_overlay);
                 mImageView0 = (ImageView) itemView.findViewById(R.id.home_profile_eats_img1_id);
                 mImageView1 = (ImageView) itemView.findViewById(R.id.home_profile_eats_img2_id);
                 mImageView2 = (ImageView) itemView.findViewById(R.id.home_profile_eats_img3_id);
@@ -176,7 +178,10 @@ public class HomeFragment extends Fragment {
                         .fitCenter()
                         .into(holder.mImageView4);
             }
+
+            holder.mUserRatingImgView.setBackgroundResource(UtilClass.getRatingResourceColor(userData.userRating));
         }
+
 
         @Override
         public int getItemCount() {
@@ -195,6 +200,7 @@ public class HomeFragment extends Fragment {
 
         public class HomeUserData {
             public String userName;
+            public String userRating;
             public String userPicUrl;
             public String[] userPostImgUrls = new String[NUM_IMAGES_LANDSCAPE];
         }
@@ -301,6 +307,7 @@ public class HomeFragment extends Fragment {
                     HomeUserData userData = new HomeUserData();
 
                     userData.userName = userObj.getString(context.getString(R.string.name_attr));
+                    userData.userRating = userObj.getString(context.getString(R.string.rating_attr));
                     JSONObject userProfPicObj = userObj.getJSONObject(context.getString(R.string.picture_attr));
                     userData.userPicUrl = userProfPicObj.getString(context.getString(R.string.small_attr));
 

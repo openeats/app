@@ -47,5 +47,18 @@ public class UtilClass {
         return null;
     }
 
+    public static int getRatingResourceColor(String rating) {
+        int ratingResource = 0;
+        if (rating.contentEquals("healthy")) {
+            ratingResource = R.color.ratingHealthy;
+        } else if (rating.contentEquals("unhealthy")) {
+            ratingResource = R.color.ratingUnhealthy;
+        } else {
+            ratingResource = R.color.ratingNeutral;
+        }
+
+        return ratingResource;
+    }
+
 
 }
