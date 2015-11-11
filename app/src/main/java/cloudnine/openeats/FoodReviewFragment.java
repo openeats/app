@@ -8,12 +8,15 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.OnItemTouchListener;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.brnunes.swipeablerecyclerview.SwipeableRecyclerViewTouchListener;
 import com.squareup.picasso.Picasso;
@@ -57,12 +60,10 @@ public class FoodReviewFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    RecyclerView mRecyclerView;
-
     private CardViewAdapter mAdapter;
-
     private ArrayList<String> mItems;
-    List<FetchFoodDataTask.FoodData> mfoodDataList;
+    OnItemTouchListener itemTouchListener;
+
 
     /**
      * Use this factory method to create a new instance of
@@ -106,8 +107,7 @@ public class FoodReviewFragment extends Fragment {
             mItems.add(String.format("Card number %02d", i));
         }
 
-
-        mAdapter = new CardViewAdapter(mfoodDataList, getContext());
+        mAdapter = new CardViewAdapter(mItems, itemTouchListener, getContext());
 
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 
@@ -187,41 +187,32 @@ public class FoodReviewFragment extends Fragment {
 
 
     public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHolder> {
-        public List<FetchFoodDataTask.FoodData> foodDataList;
+        private List<String> cards;
+        private OnItemTouchListener onItemTouchListener;
         private Context context;
 
-        public CardViewAdapter(List<FetchFoodDataTask.FoodData> mfoodDataList, Context mContext) {
-            this.foodDataList = mfoodDataList;
+        public CardViewAdapter(List<String> cards, OnItemTouchListener onItemTouchListener, Context mContext) {
+            this.cards = cards;
+            this.onItemTouchListener = onItemTouchListener;
             this.context = mContext;
         }
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.fragment_food_review, viewGroup, false);
+            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.activity_review, viewGroup, false);
             return new ViewHolder(v);
         }
 
         @Override
         public void onBindViewHolder(ViewHolder viewHolder, int i) {
-            FetchFoodDataTask.FoodData userData = foodDataList.get(i);
-            viewHolder.title.setText("Food");
+            viewHolder.title.setText(cards.get(i));
             ImageView image1;
-            Picasso.with(viewHolder.itemView.getContext()).load(userData.userfoodImagesUrl[2]).into(viewHolder.image1);
-
-        }
-
-        private void setupRecyclerView(RecyclerView rv) {
-            FetchFoodDataTask asyncTask = new FetchFoodDataTask();
-            asyncTask.execute();
-            rv.setLayoutManager(new LinearLayoutManager(rv.getContext()));
-
-
-
+            Picasso.with(viewHolder.itemView.getContext()).load("https://goo.gl/R6lRbg").into(viewHolder.image1);
         }
 
         @Override
         public int getItemCount() {
-            return foodDataList == null ? 0 : foodDataList.size();
+            return cards == null ? 0 : cards.size();
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
@@ -232,145 +223,10 @@ public class FoodReviewFragment extends Fragment {
             public ViewHolder(View itemView) {
                 super(itemView);
                 title = (TextView) itemView.findViewById(R.id.card_view_title);
-
-                //image1 = (Image) itemView.findViewById());
                 name = (TextView) itemView.findViewById(R.id.name);
                 image1 = (ImageView) itemView.findViewById(R.id.image);
-
-                // image1 = (ImageView) findViewById(R.id.image);
-                // Picasso.with(this).load("https://goo.gl/R6lRbg").into(image1);
+            }
             }
         }
-    }
-
-    public class FetchFoodDataTask extends AsyncTask<Void, Void, List<FetchFoodDataTask.FoodData>> {
-
-
-        public class FoodData {
-            public String userName;
-            public String[] userfoodImagesUrl = new String[10];
-        }
-
-        private FoodReviewFragment reviewFragment;
-        private Context context;
-
-
-        @Override
-        protected void onPreExecute() {
-        }
-
-        @Override
-        protected void onPostExecute(final List<FoodData> foodDataList) {
-            reviewFragment.mRecyclerView.setAdapter(new CardViewAdapter(foodDataList, context));
-
-        }
-
-        @Override
-        protected List<FoodData> doInBackground(Void... voids) {
-            String foodJsonData = fetchJsonData();
-            List<FoodData> foodDataList = parseJsonData(foodJsonData);
-            return foodDataList;
-        }
-
-        private String fetchJsonData() {
-            Uri foodDataFetchUri = Uri.parse(context.getString(R.string.home_data_fetch_url)).
-                    buildUpon().
-                    appendQueryParameter(context.getString(R.string.userid_param), UtilClass.getUserId(context)).
-                    build();
-
-            HttpURLConnection urlConnection = null;
-            BufferedReader reader = null;
-            // Will contain the raw JSON response as a string.
-            String homeJsonData = null;
-
-            try {
-                URL url = new URL(foodDataFetchUri.toString());
-                // Create the request to OpenWeatherMap, and open the connection
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.connect();
-
-                int responseCode = urlConnection.getResponseCode();
-                String resmsg = urlConnection.getResponseMessage();
-                if (urlConnection.getResponseCode() == 200) {
-                    Log.d(TAG, "Fetched Home data successfully");
-                } else {
-                    Log.d(TAG, "Home data fetch failed");
-                }
-
-                // Read the input stream into a String
-                InputStream inputStream = urlConnection.getInputStream();
-                StringBuffer buffer = new StringBuffer();
-                if (inputStream == null) {
-                    // Nothing to do.
-                    return null;
-                }
-                reader = new BufferedReader(new InputStreamReader(inputStream));
-
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
-                    // But it does make debugging a *lot* easier if you print out the completed
-                    // buffer for debugging.
-                    buffer.append(line + "\n");
-                }
-
-                homeJsonData = buffer.toString();
-            } catch (MalformedURLException e) {
-                Log.e(TAG, "Error ", e);
-                return null;
-            } catch (ProtocolException e) {
-                Log.e(TAG, "Error ", e);
-                return null;
-            } catch (IOException e) {
-                Log.e(TAG, "Error ", e);
-                return null;
-            } finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-                if (reader != null) {
-                    try {
-                        reader.close();
-                    } catch (final IOException e) {
-                        Log.e(TAG, "Error closing stream", e);
-                    }
-                }
-            }
-
-            return homeJsonData;
-        }
-
-        private List<FoodData> parseJsonData(String jsonData) {
-            try {
-                JSONArray rootObj = new JSONArray(jsonData);
-                List<FoodData> homeDataList = new ArrayList<>(rootObj.length());
-                for (int i = 0; i < rootObj.length(); i++) {
-                    JSONObject userObj = rootObj.getJSONObject(i);
-                    FoodData foodData = new FoodData();
-
-                    foodData.userName = userObj.getString(context.getString(R.string.name_attr));
-                    // JSONObject userProfPicObj = userObj.getJSONObject(context.getString(R.string.picture_attr));
-                    // foodData.userfoodImagesUrl = userProfPicObj.getString(context.getString(R.string.small_attr));
-
-                    JSONArray postsArray = userObj.getJSONArray(context.getString(R.string.posts_attr));
-                    for (i = 0; i< postsArray.length(); i++) {
-                        if (i == 10) {
-                            break;
-                        }
-                        foodData.userfoodImagesUrl[i] = postsArray.getJSONObject(i).
-                                getJSONObject(context.getString(R.string.images_attr)).
-                                getString(context.getString(R.string.small_attr));
-                    }
-                    homeDataList.add(foodData);
-                }
-
-                return homeDataList;
-            } catch (JSONException e) {
-                Log.d(TAG, "Error ", e);
-            }
-
-            return null;
-        }
-    }
 }
+
