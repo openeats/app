@@ -36,7 +36,9 @@ public class MainDrawerActivity extends AppCompatActivity
 
         if (UtilClass.getUserId(this) == null) {
             Intent intent = new Intent(this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
+            finish();
         } else {
             FragmentManager fragmentManager = getSupportFragmentManager();
             HomeFragment homeFragment = new HomeFragment();
