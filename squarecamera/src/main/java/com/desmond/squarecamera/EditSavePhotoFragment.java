@@ -38,16 +38,15 @@ public class EditSavePhotoFragment extends Fragment {
 
             //final boolean isGranted = data.getBooleanExtra(RuntimePermissionActivity.REQUESTED_PERMISSION, false);
             final View view = getView();
-            if (view == null) Log.e(TAG, "**View is nulll!!!!!!**");
-            if (view == null) return;
+            if (view == null) {
+                Log.e(TAG, "**View is nulll!!!!!!**");
+                return;
+            }
 
             ImageView photoImageView = (ImageView) view.findViewById(R.id.photo);
-            if (photoImageView == null) Log.e(TAG, "**PhotoImageView is nulll!!!!!!**");
             Bitmap bitmap = ((BitmapDrawable) photoImageView.getDrawable()).getBitmap();
-            Log.d(TAG, "Image is this big: " + bitmap.getByteCount());
+
             Uri photoUri = ImageUtility.savePicture(getActivity(), bitmap);
-            if (photoUri == null) Log.e(TAG, "**URI is nulll!!!!!!**");
-            Log.d(TAG, "returning photo URI to Camera Activity callback" + photoUri.toString());
             ((CameraActivity) getActivity()).returnPhotoData(photoUri, buttonPressed);
 
         }

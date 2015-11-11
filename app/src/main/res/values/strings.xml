@@ -48,4 +48,6 @@
     <string name="small_image_button_content_desc">Click to view small images</string>
     <string name="medium_image_button_content_desc">Click to view medium images</string>
     <string name="large_image_button_content_desc">Click to view large images</string>
+    <string name="menu_search">Search</string>
+    <string name="search_hint">search using names</string>
 </resources>
