@@ -9,6 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -38,6 +43,12 @@ implements OpenEatsUserServiceAgreement
     private ArrayList<Post> postList = new ArrayList<Post>(100);
     private ImageAdapter postsImageAdapter;
     private GridView mGridView;
+    private TextView mPostCount;
+    private TextView mReviewCount;
+    private TextView mFollowersCount;
+    private TextView mUserMoto;
+    private TextView mUserName;
+    private ImageView mProfilePicture;
 
     private GridLayoutManager manager;
 
@@ -78,6 +89,14 @@ implements OpenEatsUserServiceAgreement
         // Inflate the layout for this fragment
         View fragmentProfile = inflater.inflate(R.layout.fragment_profile, container, false);
 
+
+        LinearLayout ll = (LinearLayout)fragmentProfile.findViewById(R.id.profile_details);
+        mPostCount = (TextView) ll.findViewById(R.id.post_count);
+        mReviewCount = (TextView) ll.findViewById(R.id.review_count);
+        mFollowersCount = (TextView) ll.findViewById(R.id.followers_count);
+        mUserMoto = (TextView) ll.findViewById(R.id.user_moto);
+        mUserName = (TextView) ll.findViewById(R.id.user_name);
+        mProfilePicture = (ImageView)ll.findViewById(R.id.profile_picture);
         //get user data from server
         String userID = UtilClass.getUserId(getContext());
 
@@ -127,13 +146,19 @@ implements OpenEatsUserServiceAgreement
     @Override
     public void onPostExecute(Object returnObject) {
         OpenEatsUser user = (OpenEatsUser)returnObject;
-        Post[] testData = user.getPosts().toArray(new Post[user.getPosts().size()]);
-//        postsImageAdapter.addAll(testData);
+        mUserName.setText(user.getName());
+        mPostCount.setText(user.getPostCount() + "\nposts");
+        mFollowersCount.setText(user.getFollowersCount()+ "\nfollowers");
+        mReviewCount.setText(user.getReviewCount() + "\nreviews");
+        mUserMoto.setText(user.getBio());
 
+        Glide.with(getContext())
+                .load(user.getProfilePic().getLargeUrl())
+                .fitCenter()
+                .into(mProfilePicture);
+
+        Post[] testData = user.getPosts().toArray(new Post[user.getPosts().size()]);
         postsImageAdapter = new ImageAdapter(getContext(),0, testData);
-//        for (Post userPost:user.getPosts()) {
-//            postsImageAdapter.add(userPost);
-//        }
         mGridView.setAdapter(postsImageAdapter);
 
     }

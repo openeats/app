@@ -7,4 +7,6 @@
     <color name="ratingHealthy">#2C9842</color>
     <color name="ratingUnhealthy">#ec412c</color>
     <color name="ratingNeutral">#fdbd00</color>
+
+    <color name="white">#ffffff</color>
 </resources>

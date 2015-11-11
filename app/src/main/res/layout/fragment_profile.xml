@@ -7,43 +7,98 @@
                   android:layout_width="match_parent"
                   android:layout_height="match_parent">
 
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            android:layout_weight="2"
+            android:orientation="horizontal"
+            android:id="@+id/profile_details">
 
-            <ImageButton
-                android:layout_width="0dp"
-                android:layout_weight="1"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/large_image_button"
-                android:src="@android:drawable/ic_dialog_dialer"
-                android:contentDescription="@string/large_image_button_content_desc"/>
+                android:orientation="vertical">
 
+                <ImageView
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:id="@+id/profile_picture"
+                    android:src="@drawable/food1"
+                    android:scaleType="fitCenter"
+                    />
 
-            <ImageButton
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:id="@+id/medium_image_button"
-                android:src="@android:drawable/ic_dialog_dialer"
-                android:contentDescription="@string/medium_image_button_content_desc"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:id="@+id/user_name"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textSize="16sp"/>
 
-            <ImageButton
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:id="@+id/small_image_button"
-                android:src="@android:drawable/ic_dialog_dialer"
-                android:contentDescription="@string/small_image_button_content_desc"/>
+            </LinearLayout>
 
-            <Switch
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:id="@+id/show_overlay_switch"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_gravity="center_horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="1,609\nPosts"
+                        android:background="@drawable/rounded_text_view"
+                        android:id="@+id/post_count"
+                        android:textAlignment="center"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="1,609\nReviews"
+                        android:background="@drawable/rounded_text_view"
+                        android:id="@+id/review_count"
+                        android:textAlignment="center"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="1.5M\nFollowers"
+                        android:background="@drawable/rounded_text_view"
+                        android:id="@+id/followers_count"
+                        android:textAlignment="center"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/user_moto"
+                    android:text="Live and  Live"
+                    android:textStyle="bold"
+                    android:textSize="17sp"
+                    android:maxLines="2"
+                    android:padding="5dp"
+                    android:gravity="center_horizontal"/>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Edit Profile"
+                    android:padding="2dp"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 

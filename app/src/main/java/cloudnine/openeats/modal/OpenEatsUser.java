@@ -17,6 +17,9 @@ public class OpenEatsUser {
     private String name;
     private String email;
     private String userHealthRating;
+    private int reviewCount;
+    private OpenEatsImage profilePic;
+    private String bio;
     private ArrayList<Post> posts;
     private int postCount;
     private int followingCount;
@@ -36,6 +39,12 @@ public class OpenEatsUser {
             this.setEmail(rootObj.getString("email"));
             this.setUserHealthRating(rootObj.getString("rating"));
             this.setPosts(PostService.getTestFoodImageArray(rootObj.getString("posts")));
+            this.setProfilePic(new OpenEatsImage(rootObj.getString("picture")));
+            this.setBio(rootObj.getString("bio"));
+            this.setFollowersCount(rootObj.getInt("followers_count"));
+            this.setFollowingCount(rootObj.getInt("following_count"));
+            this.setPostCount(rootObj.getInt("post_count"));
+            this.setReviewCount(rootObj.getInt("review_count"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -121,5 +130,29 @@ public class OpenEatsUser {
 
     public void setFollowing(String[] following) {
         this.following = following;
+    }
+
+    public int getReviewCount() {
+        return reviewCount;
+    }
+
+    public void setReviewCount(int reviewCount) {
+        this.reviewCount = reviewCount;
+    }
+
+    public OpenEatsImage getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(OpenEatsImage profilePic) {
+        this.profilePic = profilePic;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 }
