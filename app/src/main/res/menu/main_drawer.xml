@@ -5,7 +5,7 @@
         android:orderInCategory="100" app:showAsAction="never" />
     <item
         android:id="@+id/action_photo"
-        android:icon="@android:drawable/ic_menu_camera"
+        android:icon="@drawable/oe_camera"
         android:title="@string/take_photo"
         app:showAsAction="always"/>
 </menu>
