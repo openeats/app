@@ -8,6 +8,8 @@
             android:title="Review" />
         <item android:id="@+id/nav_profile" android:icon="@drawable/oe_profile"
             android:title="Profile" />
+        <item android:id="@+id/nav_follow" android:icon="@drawable/oe_profile"
+            android:title="Follow" />
     </group>
 
     <item android:title="Communicate">
