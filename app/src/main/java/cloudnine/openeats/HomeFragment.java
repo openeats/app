@@ -2,6 +2,9 @@ package cloudnine.openeats;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -130,6 +133,7 @@ public class HomeFragment extends Fragment {
             public final View mView;
             public final TextView mUserName;
             public final ImageView mUserProfImgView;
+            public final ImageView mUserRatingImgView;
             public final ImageView mImageView0;
             public final ImageView mImageView1;
             public final ImageView mImageView2;
@@ -141,6 +145,7 @@ public class HomeFragment extends Fragment {
                 this.mView = itemView;
                 mUserName = (TextView) itemView.findViewById(R.id.home_profile_name_id);
                 mUserProfImgView = (ImageView) itemView.findViewById(R.id.home_profile_img_id);
+                mUserRatingImgView = (ImageView) itemView.findViewById(R.id.home_profile_rating_overlay);
                 mImageView0 = (ImageView) itemView.findViewById(R.id.home_profile_eats_img1_id);
                 mImageView1 = (ImageView) itemView.findViewById(R.id.home_profile_eats_img2_id);
                 mImageView2 = (ImageView) itemView.findViewById(R.id.home_profile_eats_img3_id);
@@ -191,7 +196,13 @@ public class HomeFragment extends Fragment {
                         .fitCenter()
                         .into(holder.mImageView4);
             }
+
+            holder.mImageView0.setColorFilter(UtilClass.getRatingRGBColor(userData.userPostRating[0]));
+            holder.mImageView1.setColorFilter(UtilClass.getRatingRGBColor(userData.userPostRating[1]));
+            holder.mImageView2.setColorFilter(UtilClass.getRatingRGBColor(userData.userPostRating[2]));
+            holder.mUserRatingImgView.setBackgroundResource(UtilClass.getRatingResourceColor(userData.userRating));
         }
+
 
         @Override
         public int getItemCount() {
@@ -219,8 +230,10 @@ public class HomeFragment extends Fragment {
 
         public class HomeUserData {
             public String userName;
+            public String userRating;
             public String userPicUrl;
             public String[] userPostImgUrls = new String[NUM_IMAGES_LANDSCAPE];
+            public String[] userPostRating = new String[NUM_IMAGES_LANDSCAPE];
         }
 
         private HomeFragment homeFragment;
@@ -325,6 +338,7 @@ public class HomeFragment extends Fragment {
                     HomeUserData userData = new HomeUserData();
 
                     userData.userName = userObj.getString(context.getString(R.string.name_attr));
+                    userData.userRating = userObj.getString(context.getString(R.string.rating_attr));
                     JSONObject userProfPicObj = userObj.getJSONObject(context.getString(R.string.picture_attr));
                     userData.userPicUrl = userProfPicObj.getString(context.getString(R.string.small_attr));
 
@@ -336,6 +350,9 @@ public class HomeFragment extends Fragment {
                         userData.userPostImgUrls[indx] = postsArray.getJSONObject(indx).
                                 getJSONObject(context.getString(R.string.images_attr)).
                                 getString(context.getString(R.string.small_attr));
+
+                        userData.userPostRating[indx] = postsArray.getJSONObject(indx).
+                                getString(context.getString(R.string.rating_attr));
                     }
                     homeDataList.add(userData);
                 }

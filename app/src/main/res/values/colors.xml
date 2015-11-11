@@ -5,6 +5,22 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="ratingHealthy">#2C9842</color>
+    <color name="ratingHealthyOpaque">#802C9842</color>
     <color name="ratingUnhealthy">#ec412c</color>
+    <color name="ratingUnhealthyOpaque">#80ec412c</color>
     <color name="ratingNeutral">#fdbd00</color>
+    <color name="ratingNeutralOpaque">#80fdbd00</color>
+
+
+    <color name="white">#ffffff</color>
+
+    <color name="fontDark">#000000</color>
+    <color name="fontMedium">#333333</color>
+    <color name="fontLight">#999999</color>
+
+    <color name="greyDark">#000000</color>
+    <color name="greyMedium">#333333</color>
+    <color name="greyLight">#cdcdcd</color>
+    <color name="greyFaint">#e7e7e7</color>
+
 </resources>

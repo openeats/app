@@ -27,6 +27,7 @@
     <string name="user_login_url">http://api.openeatsproject.com/users/authenticate</string>
     <string name="image_upload_url">http://api.openeatsproject.com/containers/posts/upload</string>
     <string name="home_data_fetch_url">http://api.openeatsproject.com/users/following/posts</string>
+    <string name="food_data_fetch_url">http://api.openeatsproject.com/posts/review-stream</string>
     <string name="name_param">name</string>
     <string name="password_param">password</string>
     <string name="email_param">email</string>
@@ -36,6 +37,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="name_attr">name</string>
+    <string name="rating_attr">rating</string>
     <string name="picture_attr">picture</string>
     <string name="small_attr">small</string>
     <string name="posts_attr">posts</string>
@@ -55,4 +57,5 @@
     <string name="query_param">q</string>
     <string name="bio_param">bio</string>
     <string name="id_param">id</string>
+    <string name="limit_param">limit</string>
 </resources>

@@ -121,7 +121,6 @@ public class OpenEatsUserService extends AsyncTask<String,Void, Object>{
         try {
             oeu = new OpenEatsUser(new JSONObject(userProfile.toString()));
             mParentActivity.onPostExecute(oeu);
-
         } catch (JSONException e) {
             e.printStackTrace();
             mParentActivity.onPostExecute(new OpenEatsUser());
