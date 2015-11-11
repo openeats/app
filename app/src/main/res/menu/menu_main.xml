@@ -9,4 +9,5 @@
         android:icon="@drawable/oe_camera"
         android:title="@string/take_photo"
         app:showAsAction="always"/>
+
 </menu>

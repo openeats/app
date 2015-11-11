@@ -10,6 +10,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -31,6 +34,7 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.Inflater;
 
 import cloudnine.openeats.util.UtilClass;
 
@@ -69,10 +73,21 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //this fragment can be refreshed!
+        setHasOptionsMenu(true);
+
         if (getArguments() != null) {
             String mParam1 = getArguments().getString(ARG_PARAM1);
             String mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_refresh, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+
     }
 
     @Override
@@ -187,6 +202,15 @@ public class HomeFragment extends Fragment {
     private void fetchUserData() {
         FetchHomeInfoAsyncTask asyncTask = new FetchHomeInfoAsyncTask(this, getActivity());
         asyncTask.execute();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.refresh) {
+            fetchUserData();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public class FetchHomeInfoAsyncTask extends AsyncTask<Void, Void, List<FetchHomeInfoAsyncTask.HomeUserData>> {
