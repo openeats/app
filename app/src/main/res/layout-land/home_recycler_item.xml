@@ -9,6 +9,21 @@
         android:layout_height="100dp"
         android:layout_alignParentBottom="true"/>
 
+    <ImageView
+        android:layout_width="15dp"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="false"
+        android:background="@android:color/white" />
+
+    <ImageView
+        android:id="@+id/home_profile_rating_overlay"
+        android:layout_width="10dp"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="false"
+        android:background="@color/ratingHealthy" />
+
     <LinearLayout
         android:id="@+id/home_profile_eats_imgs_layout_id"
         android:layout_width="wrap_content"
