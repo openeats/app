@@ -1,6 +1,8 @@
 package cloudnine.openeats.modal;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -11,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by gaurang on 11/10/15.
  */
-public class OpenEatsUser {
+public class OpenEatsUser implements Parcelable{
 
     private String id;
     private String name;
@@ -154,5 +156,15 @@ public class OpenEatsUser {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
     }
 }

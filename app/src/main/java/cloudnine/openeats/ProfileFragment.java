@@ -40,7 +40,7 @@ implements OpenEatsUserServiceAgreement
     private String mParam2;
 
     //TODO Remove this after testing
-    private ArrayList<Post> postList = new ArrayList<Post>(100);
+    private ArrayList<Post> postList = new ArrayList<Post>();
     private ImageAdapter postsImageAdapter;
     private GridView mGridView;
     private TextView mPostCount;
@@ -49,6 +49,7 @@ implements OpenEatsUserServiceAgreement
     private TextView mUserMoto;
     private TextView mUserName;
     private ImageView mProfilePicture;
+    private OpenEatsUser mUser;
 
     private GridLayoutManager manager;
 
@@ -77,6 +78,7 @@ implements OpenEatsUserServiceAgreement
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        restoreInstanceState(savedInstanceState);
         if (getArguments() != null) {
             String mParam1 = getArguments().getString(ARG_PARAM1);
             String mParam2 = getArguments().getString(ARG_PARAM2);
@@ -97,26 +99,46 @@ implements OpenEatsUserServiceAgreement
         mUserMoto = (TextView) ll.findViewById(R.id.user_moto);
         mUserName = (TextView) ll.findViewById(R.id.user_name);
         mProfilePicture = (ImageView)ll.findViewById(R.id.profile_picture);
-        //get user data from server
-        String userID = UtilClass.getUserId(getContext());
-
-        String[] params = {userID};
-        new OpenEatsUserService(this).execute(params);
-
-
-        postList = PostService.getTestFoodImageArray(100);
-        Post[] testData = postList.toArray(new Post[postList.size()]);
-
-        int dpMeasurement = getDpMeasurements(120);
-
-        postList.toArray(testData);
         mGridView = (GridView) fragmentProfile.findViewById(R.id.image_grid);
-        mGridView.setColumnWidth(dpMeasurement);
-        postsImageAdapter = new ImageAdapter(fragmentProfile.getContext(),0, testData);
-        mGridView.setAdapter(postsImageAdapter);
+
+
+        //get user data from server
+        if(mUser == null){
+            String userID = UtilClass.getUserId(getContext());
+            String[] params = {userID};
+            new OpenEatsUserService(this).execute(params);
+
+            Post[] testData = postList.toArray(new Post[postList.size()]);
+            postsImageAdapter = new ImageAdapter(fragmentProfile.getContext(),0, testData);
+            mGridView.setAdapter(postsImageAdapter);
+        }
+        else{
+            updateUI(mUser);
+        }
+
+
+
+//        int dpMeasurement = getDpMeasurements(120);
+
+//        mGridView.setColumnWidth(dpMeasurement);
 
 
         return fragmentProfile;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if(mUser != null)
+            outState.putParcelable("CURRENT_USER_FOR_PROFILE",mUser);
+
+    }
+
+    public void restoreInstanceState(Bundle savedInstanceState){
+        if(savedInstanceState != null && savedInstanceState.containsKey("CURRENT_USER_FOR_PROFILE")){
+            mUser = savedInstanceState.getParcelable("CURRENT_USER_FOR_PROFILE");
+        }
     }
 
     private int getDpMeasurements(int pixelMesurement){
@@ -133,6 +155,30 @@ implements OpenEatsUserServiceAgreement
         return 0;
     }
 
+    private void updateUI(OpenEatsUser user){
+        mUserName.setText(user.getName());
+
+        String name = user.getPostCount() + "\nposts";
+        mPostCount.setText(name);
+
+        String followers = user.getFollowersCount()+ "\nfollowers";
+        mFollowersCount.setText(followers);
+
+        String review = user.getReviewCount() + "\nreviews";
+        mReviewCount.setText(review);
+
+        mUserMoto.setText(user.getBio());
+
+        Glide.with(getContext())
+                .load(user.getProfilePic().getLargeUrl())
+                .fitCenter()
+                .into(mProfilePicture);
+
+        Post[] testData = user.getPosts().toArray(new Post[user.getPosts().size()]);
+        postsImageAdapter = new ImageAdapter(getContext(),0, testData);
+        mGridView.setAdapter(postsImageAdapter);
+    }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -145,21 +191,7 @@ implements OpenEatsUserServiceAgreement
 
     @Override
     public void onPostExecute(Object returnObject) {
-        OpenEatsUser user = (OpenEatsUser)returnObject;
-        mUserName.setText(user.getName());
-        mPostCount.setText(user.getPostCount() + "\nposts");
-        mFollowersCount.setText(user.getFollowersCount()+ "\nfollowers");
-        mReviewCount.setText(user.getReviewCount() + "\nreviews");
-        mUserMoto.setText(user.getBio());
-
-        Glide.with(getContext())
-                .load(user.getProfilePic().getLargeUrl())
-                .fitCenter()
-                .into(mProfilePicture);
-
-        Post[] testData = user.getPosts().toArray(new Post[user.getPosts().size()]);
-        postsImageAdapter = new ImageAdapter(getContext(),0, testData);
-        mGridView.setAdapter(postsImageAdapter);
-
+        mUser = (OpenEatsUser)returnObject;
+        updateUI(mUser);
     }
 }
