@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,8 @@ import cloudnine.openeats.util.UtilClass;
 public class ProfileFragment extends Fragment
 implements OpenEatsUserServiceAgreement
 {
+    private final String LOG_TAG = ProfileFragment.class.getSimpleName();
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -49,6 +52,7 @@ implements OpenEatsUserServiceAgreement
     private TextView mUserMoto;
     private TextView mUserName;
     private ImageView mProfilePicture;
+    private ImageView mProfileRating;
 
     private GridLayoutManager manager;
 
@@ -97,6 +101,8 @@ implements OpenEatsUserServiceAgreement
         mUserMoto = (TextView) ll.findViewById(R.id.user_moto);
         mUserName = (TextView) ll.findViewById(R.id.user_name);
         mProfilePicture = (ImageView)ll.findViewById(R.id.profile_picture);
+        mProfileRating = (ImageView) ll.findViewById(R.id.profile_picture_rating);
+
         //get user data from server
         String userID = UtilClass.getUserId(getContext());
 
@@ -151,6 +157,7 @@ implements OpenEatsUserServiceAgreement
         mFollowersCount.setText(user.getFollowersCount()+ "\nfollowers");
         mReviewCount.setText(user.getReviewCount() + "\nreviews");
         mUserMoto.setText(user.getBio());
+        mProfileRating.setBackgroundResource(UtilClass.getRatingResourceColor(user.getUserHealthRating()));
 
         Glide.with(getContext())
                 .load(user.getProfilePic().getLargeUrl())
