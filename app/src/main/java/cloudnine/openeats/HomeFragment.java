@@ -82,18 +82,15 @@ public class HomeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.home_recyler_view_id);
-        setupRecyclerView(mRecyclerView);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext()));
+        mRecyclerView.setAdapter(null);
         return rootView;
     }
 
-    private void setupRecyclerView(RecyclerView rv) {
-        FetchHomeInfoAsyncTask asyncTask = new FetchHomeInfoAsyncTask(this, getActivity());
-        asyncTask.execute();
-        rv.setLayoutManager(new LinearLayoutManager(rv.getContext()));
-
-//        rv.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(),
-//                getRandomSublist(Cheeses.sCheeseStrings, 30)));
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        fetchUserData();
     }
 
     @Override
@@ -105,6 +102,8 @@ public class HomeFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
+
+
 
     public static class HomeRecyclerViewAdapter
             extends RecyclerView.Adapter<HomeRecyclerViewAdapter.ViewHolder> {
@@ -185,6 +184,10 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    private void fetchUserData() {
+        FetchHomeInfoAsyncTask asyncTask = new FetchHomeInfoAsyncTask(this, getActivity());
+        asyncTask.execute();
+    }
 
     public class FetchHomeInfoAsyncTask extends AsyncTask<Void, Void, List<FetchHomeInfoAsyncTask.HomeUserData>> {
 

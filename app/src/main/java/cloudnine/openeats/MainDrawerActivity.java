@@ -116,6 +116,8 @@ public class MainDrawerActivity extends AppCompatActivity
             fragment = new FoodReviewFragment();
         } else if (id == R.id.nav_profile) {
             fragment = new ProfileFragment();
+        } else if (id == R.id.nav_follow) {
+            fragment = new FollowFragment();
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
