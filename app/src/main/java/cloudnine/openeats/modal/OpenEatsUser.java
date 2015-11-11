@@ -1,5 +1,11 @@
 package cloudnine.openeats.modal;
 
+import android.content.Context;
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 /**
@@ -7,12 +13,35 @@ import java.util.ArrayList;
  */
 public class OpenEatsUser {
 
-    private Long id;
-    private String firstName;
-    private String lastName;
+    private String id;
+    private String name;
     private String email;
-    private ArrayList<FoodImage> foodImages;
+    private String userHealthRating;
+    private ArrayList<Post> posts;
+    private int postCount;
+    private int followingCount;
+    private int followersCount;
+    private String[] following;
+    private Context mContext;
+    private String TAG="OpenEatsUser";
 
+    public OpenEatsUser(Context context){
+        mContext = context;
+    }
+
+    public OpenEatsUser(JSONObject rootObj){
+        try {
+            this.setId(rootObj.getString("id"));
+            this.setName(rootObj.getString("name"));
+            this.setEmail(rootObj.getString("email"));
+            this.setUserHealthRating(rootObj.getString("rating"));
+            this.setPosts(PostService.getTestFoodImageArray(rootObj.getString("posts")));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public OpenEatsUser(){}
 
     public boolean getUserInfo(){
         return true;
@@ -22,28 +51,20 @@ public class OpenEatsUser {
         return true;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -54,11 +75,51 @@ public class OpenEatsUser {
         this.email = email;
     }
 
-    public ArrayList<FoodImage> getFoodImages() {
-        return foodImages;
+    public ArrayList<Post> getPosts() {
+        return posts;
     }
 
-    public void setFoodImages(ArrayList<FoodImage> foodImages) {
-        this.foodImages = foodImages;
+    public void setPosts(ArrayList<Post> posts) {
+        this.posts = posts;
+    }
+
+    public String getUserHealthRating() {
+        return userHealthRating;
+    }
+
+    public void setUserHealthRating(String userHealthRating) {
+        this.userHealthRating = userHealthRating;
+    }
+
+    public int getPostCount() {
+        return postCount;
+    }
+
+    public void setPostCount(int postCount) {
+        this.postCount = postCount;
+    }
+
+    public int getFollowingCount() {
+        return followingCount;
+    }
+
+    public void setFollowingCount(int followingCount) {
+        this.followingCount = followingCount;
+    }
+
+    public int getFollowersCount() {
+        return followersCount;
+    }
+
+    public void setFollowersCount(int followersCount) {
+        this.followersCount = followersCount;
+    }
+
+    public String[] getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(String[] following) {
+        this.following = following;
     }
 }

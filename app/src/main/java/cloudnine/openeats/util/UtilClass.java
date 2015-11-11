@@ -28,6 +28,7 @@ public class UtilClass {
         spe.apply();
     }
 
+
     static public boolean isNetworkAvailable(Context context) {
         ConnectivityManager cm =
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

@@ -1,30 +1,29 @@
 package cloudnine.openeats;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ImageButton;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
 import cloudnine.openeats.image.ImageAdapter;
-import cloudnine.openeats.image.RecycleViewImageAdapter;
-import cloudnine.openeats.modal.FoodImage;
-import cloudnine.openeats.modal.FoodImageFactory;
+import cloudnine.openeats.modal.OpenEatsUser;
+import cloudnine.openeats.modal.Post;
+import cloudnine.openeats.modal.PostService;
+import cloudnine.openeats.modal.OpenEatsUserService;
+import cloudnine.openeats.util.UtilClass;
 
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment
+implements OpenEatsUserServiceAgreement
+{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -36,7 +35,9 @@ public class ProfileFragment extends Fragment {
     private String mParam2;
 
     //TODO Remove this after testing
-    private ArrayList<FoodImage> foodImageList = new ArrayList<FoodImage>(100);
+    private ArrayList<Post> postList = new ArrayList<Post>(100);
+    private ImageAdapter postsImageAdapter;
+    private GridView mGridView;
 
     private GridLayoutManager manager;
 
@@ -76,16 +77,24 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View fragmentProfile = inflater.inflate(R.layout.fragment_profile, container, false);
-        foodImageList = FoodImageFactory.getTestFoodImageArray(100);
-        FoodImage[] testData = foodImageList.toArray(new FoodImage[foodImageList.size()]);
+
+        //get user data from server
+        String userID = UtilClass.getUserId(getContext());
+
+        String[] params = {userID};
+        new OpenEatsUserService(this).execute(params);
+
+
+        postList = PostService.getTestFoodImageArray(100);
+        Post[] testData = postList.toArray(new Post[postList.size()]);
 
         int dpMeasurement = getDpMeasurements(120);
 
-        foodImageList.toArray(testData);
-        GridView gv = (GridView) fragmentProfile.findViewById(R.id.image_grid);
-        gv.setColumnWidth(dpMeasurement);
-        ImageAdapter ia = new ImageAdapter(fragmentProfile.getContext(),0, testData);
-        gv.setAdapter(ia);
+        postList.toArray(testData);
+        mGridView = (GridView) fragmentProfile.findViewById(R.id.image_grid);
+        mGridView.setColumnWidth(dpMeasurement);
+        postsImageAdapter = new ImageAdapter(fragmentProfile.getContext(),0, testData);
+        mGridView.setAdapter(postsImageAdapter);
 
 
         return fragmentProfile;
@@ -115,4 +124,17 @@ public class ProfileFragment extends Fragment {
         super.onDetach();
     }
 
+    @Override
+    public void onPostExecute(Object returnObject) {
+        OpenEatsUser user = (OpenEatsUser)returnObject;
+        Post[] testData = user.getPosts().toArray(new Post[user.getPosts().size()]);
+//        postsImageAdapter.addAll(testData);
+
+        postsImageAdapter = new ImageAdapter(getContext(),0, testData);
+//        for (Post userPost:user.getPosts()) {
+//            postsImageAdapter.add(userPost);
+//        }
+        mGridView.setAdapter(postsImageAdapter);
+
+    }
 }

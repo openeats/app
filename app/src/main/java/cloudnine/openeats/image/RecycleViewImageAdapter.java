@@ -10,16 +10,16 @@ import android.widget.ImageView;
 import java.util.List;
 
 import cloudnine.openeats.R;
-import cloudnine.openeats.modal.FoodImage;
+import cloudnine.openeats.modal.Post;
 
 /**
  * Created by gaurang on 11/10/15.
  */
 public class RecycleViewImageAdapter extends RecyclerView.Adapter<RecycleViewImageAdapter.RecyclerViewImageHolder> {
-    private List<FoodImage> itemList;
+    private List<Post> itemList;
     private Context context;
 
-    public RecycleViewImageAdapter(Context context, List<FoodImage> itemList) {
+    public RecycleViewImageAdapter(Context context, List<Post> itemList) {
         this.itemList = itemList;
         this.context = context;
     }
