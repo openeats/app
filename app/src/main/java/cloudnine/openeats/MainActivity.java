@@ -80,12 +80,12 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == REQUEST_CAMERA) {
             Log.d(TAG, "Camera result" );
-            Uri photoUri = data.getData();
+            /*Uri photoUri = data.getData();
             String rating = data.getStringExtra(CameraActivity.BUTTON_PRESSED);
             File file = new File(photoUri.getPath());
 
             startUpload(file, rating);
-            Log.d(TAG, "Not uploading for test" + photoUri.toString());
+            Log.d(TAG, "Not uploading for test" + photoUri.toString());*/
 
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -161,35 +161,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void startUpload(File fileUri, String rating) {
-        String userId = UtilClass.getUserId(this);
 
-
-        try {
-            ImageUpload.uploadImage(fileUri, userId, rating, new AsyncHttpResponseHandler() {
-
-                @Override
-                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                    Log.d(TAG,"Upload Failure");
-                }
-
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                    Log.d(TAG,"Upload Success");
-                }
-
-                @Override
-                public void onProgress(long bytesWritten, long totalSize) {
-                    super.onProgress(bytesWritten, totalSize);
-                    Log.d("CameraActivity","Bytes Written : " +bytesWritten + " Total Size:" + totalSize);
-                }
-            });
-
-        } catch(FileNotFoundException e) {
-            Log.e(TAG, "Can't upload image: " + fileUri.toString() + " - file not found!");
-            return;
-        }
-    }
 
 
 }

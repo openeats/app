@@ -1,7 +1,9 @@
 package cloudnine.openeats;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,13 +12,24 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.desmond.squarecamera.CameraActivity;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+
+import cloudnine.openeats.image.ImageUpload;
 import cloudnine.openeats.util.UtilClass;
+import cz.msebera.android.httpclient.Header;
 
 public class MainDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static final int REQUEST_CAMERA = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,9 +86,19 @@ public class MainDrawerActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.action_photo) {
+            launchCamera();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void launchCamera() {
+
+        // Start CameraActivity
+        Intent startCustomCameraIntent = new Intent(this, CameraActivity.class);
+        startActivityForResult(startCustomCameraIntent, REQUEST_CAMERA);
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -106,5 +129,53 @@ public class MainDrawerActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    // Receive Uri of saved square photo
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != RESULT_OK) return;
+
+        if (requestCode == REQUEST_CAMERA) {
+            //Log.d(TAG, "Camera result");
+            Uri photoUri = data.getData();
+            String rating = data.getStringExtra(CameraActivity.BUTTON_PRESSED);
+            File file = new File(photoUri.getPath());
+
+            startUpload(file, rating);
+            //Log.d(TAG, "Not uploading for test" + photoUri.toString());
+
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void startUpload(File fileUri, String rating) {
+        String userId = UtilClass.getUserId(this);
+
+
+        try {
+            ImageUpload.uploadImage(fileUri, userId, rating, new AsyncHttpResponseHandler() {
+
+                @Override
+                public void onProgress(long bytesWritten, long totalSize) {
+                    super.onProgress(bytesWritten, totalSize);
+                    //Log.d("CameraActivity", "Bytes Written : " + bytesWritten + " Total Size:" + totalSize);
+                }
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                    //Log.d(TAG, "Upload Success");
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                    //Log.d(TAG, "Upload Failure");
+                }
+            });
+
+        } catch(FileNotFoundException e) {
+            //Log.e(TAG, "Can't upload image: " + fileUri.toString() + " - file not found!");
+            return;
+        }
     }
 }

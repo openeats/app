@@ -3,9 +3,13 @@ package com.desmond.squarecamera;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 
 
 public class CameraActivity extends AppCompatActivity {
@@ -58,6 +62,8 @@ public class CameraActivity extends AppCompatActivity {
 
         finish();
     }
+
+
 
     public void onCancel(View view) {
         getSupportFragmentManager().popBackStack();
