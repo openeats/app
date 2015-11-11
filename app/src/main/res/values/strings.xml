@@ -50,4 +50,8 @@
     <string name="large_image_button_content_desc">Click to view large images</string>
     <string name="menu_search">Search</string>
     <string name="search_hint">search using names</string>
+    <string name="follow_data_fetch_url">http://api.openeatsproject.com/users/search</string>
+    <string name="query_param">q</string>
+    <string name="bio_param">bio</string>
+    <string name="id_param">id</string>
 </resources>
