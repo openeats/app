@@ -2,6 +2,9 @@ package cloudnine.openeats;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -179,6 +182,9 @@ public class HomeFragment extends Fragment {
                         .into(holder.mImageView4);
             }
 
+            holder.mImageView0.setColorFilter(UtilClass.getRatingRGBColor(userData.userPostRating[0]));
+            holder.mImageView1.setColorFilter(UtilClass.getRatingRGBColor(userData.userPostRating[1]));
+            holder.mImageView2.setColorFilter(UtilClass.getRatingRGBColor(userData.userPostRating[2]));
             holder.mUserRatingImgView.setBackgroundResource(UtilClass.getRatingResourceColor(userData.userRating));
         }
 
@@ -203,6 +209,7 @@ public class HomeFragment extends Fragment {
             public String userRating;
             public String userPicUrl;
             public String[] userPostImgUrls = new String[NUM_IMAGES_LANDSCAPE];
+            public String[] userPostRating = new String[NUM_IMAGES_LANDSCAPE];
         }
 
         private HomeFragment homeFragment;
@@ -319,6 +326,9 @@ public class HomeFragment extends Fragment {
                         userData.userPostImgUrls[indx] = postsArray.getJSONObject(indx).
                                 getJSONObject(context.getString(R.string.images_attr)).
                                 getString(context.getString(R.string.small_attr));
+
+                        userData.userPostRating[indx] = postsArray.getJSONObject(indx).
+                                getString(context.getString(R.string.rating_attr));
                     }
                     homeDataList.add(userData);
                 }

@@ -16,7 +16,6 @@
         android:layout_alignParentTop="false" />
 
     <ImageView
-        android:id="@+id/home_profile_rating_overlay_bg"
         android:layout_width="15dp"
         android:layout_height="100dp"
         android:layout_alignParentBottom="true"
@@ -25,7 +24,7 @@
 
     <ImageView
         android:id="@+id/home_profile_rating_overlay"
-        android:layout_width="12dp"
+        android:layout_width="10dp"
         android:layout_height="100dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="false"
@@ -56,6 +55,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginRight="3dp"
+                android:tint="@color/ratingNeutralOpaque"
                 tools:src="@mipmap/ic_launcher" />
             <ImageView
                 android:id="@+id/home_profile_eats_img2_id"
@@ -63,12 +63,14 @@
                 android:layout_height="80dp"
                 android:layout_marginLeft="3dp"
                 android:layout_marginRight="3dp"
+                android:tint="@color/ratingNeutralOpaque"
                 tools:src="@mipmap/ic_launcher" />
             <ImageView
                 android:id="@+id/home_profile_eats_img3_id"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginLeft="3dp"
+                android:tint="@color/ratingNeutralOpaque"
                 tools:src="@mipmap/ic_launcher" />
         </LinearLayout>
     </LinearLayout>
