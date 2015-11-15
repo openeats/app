@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <uses-feature android:name="android.hardware.camera2" />
 
     <application
@@ -42,6 +43,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="cloudnine.openeats.LoginActivity" />
         </activity>
-<activity android:name="com.desmond.squarecamera.CameraActivity" />    </application>
+        <activity android:name="com.desmond.squarecamera.CameraActivity" />
+
+        <provider
+            android:name=".data.OpenEatsProvider"
+            android:authorities="cloudnine.openeats"
+            android:enabled="true"
+            android:exported="true" >
+        </provider>
+    </application>
 
 </manifest>
