@@ -9,7 +9,7 @@ import cloudnine.openeats.data.OpenEatsContract.*;
 /**
  * Created by NICK on 11/15/2015.
  */
-public class OpenEatsDbHelper extends SQLiteOpenHelper{
+public class OpenEatsDbHelper extends SQLiteOpenHelper {
 
     static final String DATABASE_NAME = "open_eats.db";
     private static final int DATABASE_VERSION = 1;
@@ -22,7 +22,7 @@ public class OpenEatsDbHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
 
         //reviews are unique by the combination of post id and user id
-        final String SQL_CREATE_REVIEW_TABLE =  "CREATE TABLE " + ReviewsEntry.TABLE_NAME + " (" +
+        final String SQL_CREATE_REVIEW_TABLE = "CREATE TABLE " + ReviewsEntry.TABLE_NAME + " (" +
                 ReviewsEntry.COLUMN_RATING + " TEXT NOT NULL, " +
                 ReviewsEntry.COLUMN_POST_ID + " TEXT NOT NULL, " +
                 ReviewsEntry.COLUMN_USER_ID + " TEXT NOT NULL, " +
@@ -32,7 +32,7 @@ public class OpenEatsDbHelper extends SQLiteOpenHelper{
         db.execSQL(SQL_CREATE_REVIEW_TABLE);
 
 
-        final String SQL_CREATE_POST_TABLE =  "CREATE TABLE " + PostsEntry.TABLE_NAME + " (" +
+        final String SQL_CREATE_POST_TABLE = "CREATE TABLE " + PostsEntry.TABLE_NAME + " (" +
                 PostsEntry._ID + " TEXT PRIMARY KEY NOT NULL," +
                 PostsEntry.COLUMN_USER_ID + " TEXT NOT NULL," +
                 PostsEntry.COLUMN_RATING + " TEXT NOT NULL," +
@@ -46,15 +46,39 @@ public class OpenEatsDbHelper extends SQLiteOpenHelper{
                 + ");";
         db.execSQL(SQL_CREATE_POST_TABLE);
 
-        final String SQL_CREATE_USER_TABLE =  "CREATE TABLE " + UsersEntry.TABLE_NAME + " ("
+        final String SQL_CREATE_USER_TABLE = "CREATE TABLE " + UsersEntry.TABLE_NAME + " (" +
+                UsersEntry._ID + " TEXT PRIMARY KEY NOT NULL, " +
+                UsersEntry.COLUMN_NAME + " TEXT NOT NULL, " +
+                UsersEntry.COLUMN_EMAIL + " TEXT UNIQUE NOT NULL, " +
+                UsersEntry.COLUMN_BIO + " TEXT NOT NULL, " +
+                UsersEntry.COLUMN_PASSWORD + " TEXT NOT NULL, " +
+                UsersEntry.COLUMN_RATING + " TEXT NOT NULL, " +
+                UsersEntry.COLUMN_PICTURE_LARGE + " TEXT NOT NULL, " +
+                UsersEntry.COLUMN_PICTURE_MEDIUM + " TEXT NOT NULL, " +
+                UsersEntry.COLUMN_PICTURE_SMALL + " TEXT NOT NULL, " +
+                UsersEntry.COLUMN_JOINED_ON + " INTEGER NOT NULL, " +
+                UsersEntry.COLUMN_UPDATED_ON + " INTEGER NOT NULL, " +
+                UsersEntry.COLUMN_UPDATED + " INTEGER NOT NULL"
                 + ");";
         db.execSQL(SQL_CREATE_USER_TABLE);
 
-        final String SQL_CREATE_USER_FOLLOWING_TABLE =  "CREATE TABLE " + UserFollowingsEntry.TABLE_NAME + " ("
+        final String SQL_CREATE_USER_FOLLOWING_TABLE = "CREATE TABLE " +
+                UserFollowingsEntry.TABLE_NAME + " (" +
+                UserFollowingsEntry.COLUMN_USER_ID + " TEXT NOT NULL, " +
+                UserFollowingsEntry.COLUMN_FOLLOWING_ID + " TEXT NOT NULL, " +
+                " UNIQUE (" + UserFollowingsEntry.COLUMN_USER_ID + ", "
+                    + UserFollowingsEntry.COLUMN_FOLLOWING_ID +
+                ") ON CONFLICT REPLACE"
                 + ");";
         db.execSQL(SQL_CREATE_USER_FOLLOWING_TABLE);
 
-        final String SQL_CREATE_USER_FAVORITE_TABLE =  "CREATE TABLE " + UserFavoritesEntry.TABLE_NAME + " ("
+        final String SQL_CREATE_USER_FAVORITE_TABLE =
+                "CREATE TABLE " + UserFavoritesEntry.TABLE_NAME + " (" +
+                UserFavoritesEntry.COLUMN_USER_ID + " TEXT NOT NULL, " +
+                UserFavoritesEntry.COLUMN_POST_ID  + " TEXT NOT NULL, " +
+                        "UNIQUE (" + UserFavoritesEntry.COLUMN_USER_ID + ", " +
+                        UserFavoritesEntry.COLUMN_POST_ID +
+                        ") ON CONFLICT REPLACE"
                 + ");";
         db.execSQL(SQL_CREATE_USER_FAVORITE_TABLE);
 

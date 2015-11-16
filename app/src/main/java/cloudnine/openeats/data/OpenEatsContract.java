@@ -146,8 +146,8 @@ public class OpenEatsContract {
 
     }
 
-    //return a list of people the user is following
-    //*does not implement base columns, should not have a separate id, each row should be unique.
+    //a list of people the user is following
+    //*does not implement base columns; should not have a separate id, each row should be unique.
     public static final class UserFollowingsEntry {
 
         public static final Uri CONTENT_URI =
@@ -165,8 +165,8 @@ public class OpenEatsContract {
 
     }
 
-    //return a list of meals the user has favorited
-    //*does not implement base columns, should not have a separate id, each row should be unique.
+    //a list of meals the user has favorited
+    //*does not implement base columns; should not have a separate id, each row should be unique.
     public static final class UserFavoritesEntry {
 
         public static final Uri CONTENT_URI =
@@ -180,7 +180,7 @@ public class OpenEatsContract {
         public static final String TABLE_NAME = "user_favorites";
 
         public static final String COLUMN_USER_ID = "user_id";
-        public static final String COLUMN_FOLLOWING_ID = "post_id";
+        public static final String COLUMN_POST_ID = "post_id";
 
     }
 }
