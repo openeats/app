@@ -1,6 +1,7 @@
 package cloudnine.openeats.data;
 
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
@@ -44,6 +45,10 @@ public class OpenEatsContract {
         public static final String COLUMN_RATING = "rating";
         public static final String COLUMN_POST_ID = "post_id";
         public static final String COLUMN_USER_ID = "user_id";
+
+        public static Uri buildReviewsUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
     }
 
     /**
@@ -85,6 +90,10 @@ public class OpenEatsContract {
         public static final String COLUMN_UPDATED_AT = "updated_at";
         public static final String COLUMN_REVIEW_HEALTHY_COUNT = "review_healthy_count";
         public static final String COLUMN_REVIEW_UNHEALTHY_COUNT = "review_unhealthy_count";
+
+        public static Uri buildPostsUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
     }
 
     /**
@@ -143,7 +152,9 @@ public class OpenEatsContract {
         public static final String COLUMN_UPDATED           = "updated";
 
         //note: "following", "favorites", and "posts" go in separate tables in SQLite
-
+        public static Uri buildUsersUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
     }
 
     //a list of people the user is following
@@ -163,6 +174,9 @@ public class OpenEatsContract {
         public static final String COLUMN_USER_ID = "user_id";
         public static final String COLUMN_FOLLOWING_ID = "following_id"; //a user_id
 
+        public static Uri buildFollowingsUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
     }
 
     //a list of meals the user has favorited
@@ -182,5 +196,8 @@ public class OpenEatsContract {
         public static final String COLUMN_USER_ID = "user_id";
         public static final String COLUMN_POST_ID = "post_id";
 
+        public static Uri buildFavoritesUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
     }
 }
