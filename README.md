@@ -9,6 +9,10 @@ OpenEats aims to shed a new tint, on food choices by using a simple rating syste
 
 As the OpenEats community builds a gallery of food they have consumed, they get a real sense of their food choices since the results of voting will result in either a red or green tint on the food picture.
 
+![](https://raw.githubusercontent.com/openeats/app/master/static/workflow-sheet.jpg)
+
+![](https://raw.githubusercontent.com/openeats/app/master/static/profiles.jpg)
+
 Social Good
 -----------
 Health awareness is a problem in this country. OpenEats is intended for anyone with a desire to improve their health but doesn’t know where to start. OpenEats aims to foster social engagement and social encouragement. The app also enables people with healthy diets to set and share positive examples with what they are eating. 
