@@ -1,4 +1,4 @@
-Open Eats Project - Android App
+OpenEats Project - Android App
 ===============================
 
 How do we increase the dialog about healthy and unhealthy food choices in our fast-paced, social-networking society?  People try to consult nutritionists, keep food journals, count calories, but they’re not doing it.  They’d rather take a photo of their dessert to post online to make others jealous.
